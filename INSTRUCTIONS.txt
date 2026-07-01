@@ -1,0 +1,144 @@
+==============================================================================
+ HOW TO DOWNLOAD AND RUN THE SURVEILLANCE / SPYWARE SCAN  (Windows 10)
+==============================================================================
+
+ This tool checks a Windows PC for signs of spying (screen recording, camera or
+ microphone spying, keyloggers, remote-access tools, and similar).
+
+ It ONLY looks. It does not change, delete, or send anything, and it does not
+ need the internet. When it finishes it opens a report and saves a copy to the
+ Desktop.
+
+ You need these two files (keep them together in the same folder):
+     1. Scan-Surveillance.ps1
+     2. RUN_ME_Scan.bat
+
+ There are two ways to get the files onto the PC. Use EITHER Option A or
+ Option B, then follow "STEP 2: RUN IT".
+
+
+==============================================================================
+ STEP 1 - GET THE FILES ONTO THE PC
+==============================================================================
+
+ ---- OPTION A: Download from the internet (GitHub) ----
+
+   1. On the PC, open a web browser and go to this link:
+
+          (paste the repository link here)
+
+   2. Click the green button near the top that says  " < > Code ".
+   3. In the little menu that drops down, click  "Download ZIP".
+   4. The file lands in your Downloads folder. Open Downloads (you can click the
+      little download arrow in the browser, or open File Explorer and click
+      "Downloads" on the left).
+   5. RIGHT-click the ZIP file you just downloaded and choose  "Extract All..."
+      then click  "Extract".  A normal folder opens with the two files inside.
+   6. Leave that folder open and go to STEP 2.
+
+
+   ---- OPTION B: Copy from a USB flash drive ----
+
+   1. On a computer that already has the two files, copy BOTH of them onto a
+      USB flash drive.
+   2. Plug the USB drive into the uncle's PC.
+   3. Open File Explorer (the yellow folder icon on the taskbar), click
+      "This PC" on the left, and double-click the USB drive to open it.
+   4. Make sure you can see both files, then go to STEP 2.
+
+
+==============================================================================
+ STEP 2 - RUN IT
+==============================================================================
+
+   1. DOUBLE-CLICK the file named:   RUN_ME_Scan.bat
+
+      (If your files show file endings, it is "RUN_ME_Scan.bat". The other file,
+       ending in ".ps1", is started automatically - you do not open it yourself.)
+
+   2. You will probably see a blue box titled "Windows protected your PC".
+      This is normal for any downloaded script. To continue:
+          - Click the words  "More info"
+          - Then click the button  "Run anyway"
+
+   3. A window will pop up asking:
+          "Do you want to allow this app to make changes to your device?"
+      Click  "Yes".
+
+      >> Why: this just lets the scan see the WHOLE computer (all user accounts,
+         services, and tasks) instead of only part of it. The scan still does
+         not change anything - clicking Yes does not give it permission to alter
+         your PC, only to look more thoroughly.
+
+   4. A black window opens and text scrolls by. LET IT RUN. It usually takes
+      about one to two minutes.
+
+   5. When it finishes, a report opens automatically. A copy is also saved to
+      the DESKTOP as two files whose names start with:
+          Surveillance_Scan_
+      (one ends in .html - the nice report; one ends in .txt - a plain copy)
+
+   6. Press the ENTER key to close the black window.
+
+
+==============================================================================
+ HOW TO READ THE REPORT
+==============================================================================
+
+   The findings are sorted into three levels:
+
+     HIGH     - Look at these first. Examples: something is using the camera
+                right now, or a known spying program was found.
+
+     MEDIUM   - "Please check." Many of these are perfectly normal (for example,
+                Zoom or Teams using the camera, or a remote-support tool that
+                the company's IT department installed on purpose). Read them and
+                decide if each one is expected.
+
+     INFO     - Background information, usually not a problem.
+
+   A long list is not automatically bad. Read the HIGH items, then skim the rest.
+
+
+==============================================================================
+ IF SOMETHING GOES WRONG
+==============================================================================
+
+   * Double-clicking does nothing, or it opens in Notepad instead of running:
+       RIGHT-click  RUN_ME_Scan.bat  and choose  "Run as administrator".
+
+   * The black window flashes and disappears instantly:
+       Do this instead -
+         1. Click Start, type:  powershell
+         2. RIGHT-click "Windows PowerShell" and choose "Run as administrator".
+         3. Click "Yes" on the prompt.
+         4. Type the following on one line and press Enter (change the path if
+            your files are somewhere other than the Desktop):
+
+              powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\Desktop\Scan-Surveillance.ps1"
+
+   * Your antivirus blocks it or puts it in "quarantine":
+       This can happen because the file is an unsigned script that inspects the
+       system - antivirus programs are cautious about that. The tool is safe and
+       read-only. You can either temporarily allow/restore the file in your
+       antivirus, or use the PowerShell method just above. If you are not
+       comfortable doing that, stop and ask the person who gave you these files.
+
+   * It says it could not get administrator rights:
+       The scan will still run, just with less coverage. For a full scan, use
+       "Run as administrator" as described above.
+
+
+==============================================================================
+ GOOD TO KNOW
+==============================================================================
+
+   - Nothing is changed on the PC and nothing is sent anywhere.
+   - No internet connection is required to run the scan.
+   - This is a strong first check, but no tool can catch EVERY possible form of
+     spying (for example, a hidden physical camera in the room, or a device
+     plugged in between the keyboard and the PC). If a serious result shows up
+     and you are not sure what it means, do NOT delete anything - keep the saved
+     report and get a second opinion. See the README file for more detail.
+
+==============================================================================
