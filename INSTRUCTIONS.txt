@@ -1,144 +1,206 @@
 ==============================================================================
- HOW TO DOWNLOAD AND RUN THE SURVEILLANCE / SPYWARE SCAN  (Windows 10)
+ HOW TO DOWNLOAD AND RUN THE SURVEILLANCE TOOLKIT  (Windows 10 / 11)
+ Downloading from GitHub - step by step
 ==============================================================================
 
- This tool checks a Windows PC for signs of spying (screen recording, camera or
- microphone spying, keyloggers, remote-access tools, and similar).
+ This toolkit has TWO tools:
 
- It ONLY looks. It does not change, delete, or send anything, and it does not
- need the internet. When it finishes it opens a report and saves a copy to the
- Desktop.
+   1. THE SCAN  - only looks for spying (screen recording, camera/mic spying,
+                  keyloggers, remote-access tools...). Changes nothing.
+   2. THE FIX   - optional. Turns off risky settings and removes flagged
+                  programs. Asks before every change, and everything is
+                  reversible.
 
- You need these two files (keep them together in the same folder):
-     1. Scan-Surveillance.ps1
-     2. RUN_ME_Scan.bat
+ Do the SCAN first (Parts 1-3). Only do the FIX (Part 4) if you need to and you
+ understand what you are changing.
 
- There are two ways to get the files onto the PC. Use EITHER Option A or
- Option B, then follow "STEP 2: RUN IT".
-
-
-==============================================================================
- STEP 1 - GET THE FILES ONTO THE PC
-==============================================================================
-
- ---- OPTION A: Download from the internet (GitHub) ----
-
-   1. On the PC, open a web browser and go to this link:
-
-          (paste the repository link here)
-
-   2. Click the green button near the top that says  " < > Code ".
-   3. In the little menu that drops down, click  "Download ZIP".
-   4. The file lands in your Downloads folder. Open Downloads (you can click the
-      little download arrow in the browser, or open File Explorer and click
-      "Downloads" on the left).
-   5. RIGHT-click the ZIP file you just downloaded and choose  "Extract All..."
-      then click  "Extract".  A normal folder opens with the two files inside.
-   6. Leave that folder open and go to STEP 2.
-
-
-   ---- OPTION B: Copy from a USB flash drive ----
-
-   1. On a computer that already has the two files, copy BOTH of them onto a
-      USB flash drive.
-   2. Plug the USB drive into the uncle's PC.
-   3. Open File Explorer (the yellow folder icon on the taskbar), click
-      "This PC" on the left, and double-click the USB drive to open it.
-   4. Make sure you can see both files, then go to STEP 2.
+ Files you will see after downloading:
+     Scan-Surveillance.ps1     RUN_ME_Scan.bat        <- the scan
+     Fix-Surveillance.ps1      RUN_ME_Fix.bat         <- the fix
+                               UNDO_Fix.bat           <- undo the fix
+     README.md                 INSTRUCTIONS.txt       <- docs
 
 
 ==============================================================================
- STEP 2 - RUN IT
+ PART 1 - DOWNLOAD THE FILES FROM GITHUB
+==============================================================================
+
+   1. On the PC, open a web browser (Edge or Chrome) and go to the repository:
+
+          (paste your GitHub repository link here)
+
+   2. Click the green button near the top-right that says   " < > Code ".
+
+   3. In the menu that drops down, click   "Download ZIP".
+
+   4. The browser may warn that the ZIP "could harm your device" (it says that
+      about anything containing scripts). Choose  "Keep"  /  "Keep anyway".
+
+   5. Open your Downloads folder (click the download arrow in the browser, or
+      open File Explorer and click "Downloads" on the left).
+
+   6. RIGHT-click the ZIP you just downloaded and choose  "Extract All..."  then
+      click  "Extract".
+
+   7. A folder opens. You may need to open ONE more folder inside it (GitHub
+      names it something like "...-main"). Keep opening until you can see
+      RUN_ME_Scan.bat and the other files listed above sitting together.
+
+      >> Keep all the files together in this one folder. The launchers look for
+         the scripts next to them.
+
+   (Optional, only if a script later refuses to run: right-click
+    RUN_ME_Scan.bat -> Properties -> if you see an "Unblock" checkbox near the
+    bottom, tick it and click OK. Do the same for the .ps1 files. Windows marks
+    downloaded files as "blocked" and this clears it.)
+
+
+==============================================================================
+ PART 2 - RUN THE SCAN
 ==============================================================================
 
    1. DOUBLE-CLICK the file named:   RUN_ME_Scan.bat
 
-      (If your files show file endings, it is "RUN_ME_Scan.bat". The other file,
-       ending in ".ps1", is started automatically - you do not open it yourself.)
-
-   2. You will probably see a blue box titled "Windows protected your PC".
-      This is normal for any downloaded script. To continue:
-          - Click the words  "More info"
+   2. You will probably see a blue box: "Windows protected your PC".
+      This is normal for a downloaded script. To continue:
+          - Click the small text  "More info"
           - Then click the button  "Run anyway"
 
-   3. A window will pop up asking:
+   3. A window pops up asking:
           "Do you want to allow this app to make changes to your device?"
       Click  "Yes".
 
-      >> Why: this just lets the scan see the WHOLE computer (all user accounts,
-         services, and tasks) instead of only part of it. The scan still does
-         not change anything - clicking Yes does not give it permission to alter
-         your PC, only to look more thoroughly.
+      >> Why: this only lets the scan SEE the whole computer (all accounts,
+         services, tasks). It still changes nothing.
 
-   4. A black window opens and text scrolls by. LET IT RUN. It usually takes
-      about one to two minutes.
+   4. A black window opens and text scrolls by. LET IT RUN - about 1 to 2
+      minutes.
 
-   5. When it finishes, a report opens automatically. A copy is also saved to
-      the DESKTOP as two files whose names start with:
-          Surveillance_Scan_
-      (one ends in .html - the nice report; one ends in .txt - a plain copy)
+   5. When it finishes, a report opens automatically in your browser. A copy is
+      also saved to the DESKTOP, named:
+          Surveillance_Scan_<computer-name>_<date>.html   (the nice report)
+          Surveillance_Scan_<computer-name>_<date>.txt    (a plain-text copy)
 
    6. Press the ENTER key to close the black window.
 
 
 ==============================================================================
- HOW TO READ THE REPORT
+ PART 3 - READ THE SCAN REPORT
 ==============================================================================
 
-   The findings are sorted into three levels:
+   Findings are sorted into three levels:
 
-     HIGH     - Look at these first. Examples: something is using the camera
-                right now, or a known spying program was found.
+     HIGH    - Look first. E.g. something is using the camera right now, or a
+               known spying program was found.
+     MEDIUM  - "Please check." MANY of these are normal (Zoom/Teams using the
+               camera; an IT remote-support tool). Read each and decide if it
+               is expected.
+     INFO    - Background info, usually fine.
 
-     MEDIUM   - "Please check." Many of these are perfectly normal (for example,
-                Zoom or Teams using the camera, or a remote-support tool that
-                the company's IT department installed on purpose). Read them and
-                decide if each one is expected.
+   A long list is not automatically bad. Read the HIGH items, then skim the
+   rest. If HIGH is empty and the MEDIUM items are things you recognise, the
+   machine most likely looks clean.
 
-     INFO     - Background information, usually not a problem.
 
-   A long list is not automatically bad. Read the HIGH items, then skim the rest.
+==============================================================================
+ PART 4 - RUN THE FIX TOOL  (optional - only if you need to change something)
+==============================================================================
+
+   The fix tool asks Y/N before EVERY change, and everything can be undone
+   (Part 5). Run it only after reading the scan report.
+
+   1. DOUBLE-CLICK:   RUN_ME_Fix.bat
+
+   2. Same as before: if "Windows protected your PC" appears, click
+      "More info" -> "Run anyway".  Then click "Yes" on the admin prompt.
+
+   3. It walks you through FOUR stages. For each item it shows what it found and
+      waits for you to answer. Type the letter and press ENTER.
+
+      STAGE 1 - HARDENING
+        Offers to turn off Remote Assistance, Remote Desktop (RDP), and Xbox
+        Game Bar recording. Type  y  to turn something off, or  n  to leave it.
+        (Say  n  to Remote Desktop if you or IT actually use it.)
+
+      STAGE 2 - STARTUP ITEMS
+        Lists each program that launches automatically. Anything matching a
+        known spy/monitor name is shown in RED. Type  y  to disable an entry
+        (reversible) or  n  to keep it. Say  n  to things you recognise as
+        normal (Steam, Discord, audio drivers, your e-signature software, etc.).
+
+      STAGE 3 - DETECTED PROGRAMS
+        For anything matching the spying/monitoring name lists, you get three
+        choices - type one letter:
+            U = Uninstall using the program's own uninstaller (cleanest)
+            Q = Quarantine: stop it and MOVE its files aside (reversible)
+            S = Skip / leave it alone
+        If you are unsure, choose  S  or  Q  (Q is reversible; a full uninstall
+        of the wrong thing is not).
+
+      STAGE 4 - PERMANENT DELETE
+        Optional. Shows what is sitting in quarantine. To erase it forever you
+        must TYPE the word  DELETE  and press Enter. Anything else keeps it.
+        If you are not 100% sure, just press Enter and keep it - you can delete
+        later, or restore it.
+
+   4. When it finishes, a log and a "Quarantine" folder are saved on the Desktop
+      inside a folder called  Surveillance_Fix .
+
+
+==============================================================================
+ PART 5 - UNDO THE FIX  (if you changed something by mistake)
+==============================================================================
+
+   1. DOUBLE-CLICK:   UNDO_Fix.bat
+   2. Click "Yes" on the admin prompt.
+   3. It reverses everything from the last fix run - puts settings back,
+      re-enables services, and moves quarantined files back where they were.
+
+   The only things it CANNOT undo: a program you chose to fully UNINSTALL, and
+   a quarantine you chose to PERMANENTLY DELETE.
 
 
 ==============================================================================
  IF SOMETHING GOES WRONG
 ==============================================================================
 
-   * Double-clicking does nothing, or it opens in Notepad instead of running:
-       RIGHT-click  RUN_ME_Scan.bat  and choose  "Run as administrator".
+   * Double-clicking does nothing, or opens the file in Notepad:
+       RIGHT-click the .bat file and choose  "Run as administrator".
 
    * The black window flashes and disappears instantly:
-       Do this instead -
-         1. Click Start, type:  powershell
-         2. RIGHT-click "Windows PowerShell" and choose "Run as administrator".
-         3. Click "Yes" on the prompt.
-         4. Type the following on one line and press Enter (change the path if
-            your files are somewhere other than the Desktop):
+       1. Click Start, type:  powershell
+       2. RIGHT-click "Windows PowerShell" -> "Run as administrator" -> Yes.
+       3. Type this on one line and press Enter (change the path to where your
+          extracted folder actually is):
 
-              powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\Desktop\Scan-Surveillance.ps1"
+            powershell -NoProfile -ExecutionPolicy Bypass -File "C:\path\to\folder\Scan-Surveillance.ps1"
 
-   * Your antivirus blocks it or puts it in "quarantine":
-       This can happen because the file is an unsigned script that inspects the
-       system - antivirus programs are cautious about that. The tool is safe and
-       read-only. You can either temporarily allow/restore the file in your
-       antivirus, or use the PowerShell method just above. If you are not
-       comfortable doing that, stop and ask the person who gave you these files.
+          (For the fix tool, use Fix-Surveillance.ps1 instead. Add  -Undo  at
+           the end to undo.)
 
-   * It says it could not get administrator rights:
-       The scan will still run, just with less coverage. For a full scan, use
-       "Run as administrator" as described above.
+   * Antivirus blocks it or puts it in "quarantine":
+       This happens because these are unsigned scripts that inspect the system.
+       They are safe and (for the scan) read-only. Either temporarily allow /
+       restore the file in your antivirus, or use the PowerShell method above.
+
+   * "Could not get administrator rights":
+       Right-click the .bat and choose "Run as administrator".
 
 
 ==============================================================================
  GOOD TO KNOW
 ==============================================================================
 
-   - Nothing is changed on the PC and nothing is sent anywhere.
-   - No internet connection is required to run the scan.
-   - This is a strong first check, but no tool can catch EVERY possible form of
-     spying (for example, a hidden physical camera in the room, or a device
-     plugged in between the keyboard and the PC). If a serious result shows up
-     and you are not sure what it means, do NOT delete anything - keep the saved
-     report and get a second opinion. See the README file for more detail.
+   - The SCAN is read-only and needs no internet. Nothing is changed or sent.
+   - The FIX asks before every change and is reversible (except an explicit
+     uninstall or permanent delete).
+   - No tool catches EVERY kind of spying. It cannot see a hidden physical
+     camera in the room, a device plugged in between the keyboard and PC, or a
+     skilled custom implant. See README.md for the full limitations.
+   - For confirmed real malware, ALSO run a Microsoft Defender Offline scan
+     and/or Malwarebytes - they remove infections more thoroughly than this
+     tool. Keep the saved report as evidence; do not rush to delete if a
+     specific person might be involved.
+   - A reboot after making changes is a good idea.
 
 ==============================================================================

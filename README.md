@@ -36,22 +36,24 @@ only on a machine you're comfortable changing — run the fix tool.
 
 ## How to run it
 
-You need `Scan-Surveillance.ps1` and `RUN_ME_Scan.bat` in the same folder.
+Keep `Scan-Surveillance.ps1` and `RUN_ME_Scan.bat` in the same folder (they already are,
+in the repo).
 
-### Option A — USB flash drive (easiest)
-1. Copy **both** files to a USB stick.
-2. Plug the stick into the PC.
-3. Double-click **`RUN_ME_Scan.bat`**.
-4. Click **Yes** on the Windows "Do you want to allow…" (UAC) prompt — this lets the
-   scan see all accounts, services, and tasks, not just the logged-in user.
-5. Wait a minute or two. A report opens automatically and is also saved to the Desktop.
+### Option A — download from GitHub (primary)
+1. Go to the repository page and click the green **`< > Code`** button → **Download ZIP**.
+   (If the browser warns the ZIP could be harmful — it says that about anything with
+   scripts — choose **Keep**.)
+2. Open your **Downloads**, right-click the ZIP → **Extract All… → Extract**.
+3. Open the extracted folder (you may need to open one more folder inside, named
+   `…-main`) until you see the files together.
+4. Double-click **`RUN_ME_Scan.bat`** → on "Windows protected your PC" click
+   **More info → Run anyway** → click **Yes** on the admin prompt.
+5. Wait 1–2 minutes. A report opens automatically and is saved to the Desktop.
 
-### Option B — from GitHub
-1. Download the repo (green **Code** button → **Download ZIP**) and unzip it, **or**
-   `git clone` it.
-2. Then follow steps 3–5 above.
+> If a script refuses to run after download: right-click it → **Properties** → tick
+> **Unblock** → OK. Windows flags downloaded files as blocked; this clears it.
 
-### Option C — straight from PowerShell
+### Option B — straight from PowerShell
 Open PowerShell **as Administrator** in the folder and run:
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\Scan-Surveillance.ps1
@@ -59,8 +61,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Scan-Surveillance.ps1
 The `-ExecutionPolicy Bypass` part is needed because Windows blocks unsigned scripts
 by default. Running it this way only affects that one run.
 
-(For a fuller walkthrough aimed at a non-technical person — including the SmartScreen
-warning and antivirus false-positives — see `INSTRUCTIONS.txt`.)
+### Option C — USB flash drive
+Copy both files onto a stick, plug it into the PC, open the drive, and double-click
+`RUN_ME_Scan.bat` (then the same **Run anyway** / **Yes** as above).
+
+**For a full click-by-click walkthrough of the whole toolkit — download, scan, fix, and
+undo — see `INSTRUCTIONS.txt`.**
 
 ## What the report shows
 
