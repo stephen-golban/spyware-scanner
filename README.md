@@ -1,25 +1,46 @@
-# Surveillance / Spyware Scanner (Windows 10 / 11)
+# Surveillance / Spyware Toolkit (Windows 10 / 11)
 
-A **read-only** PowerShell tool that scans a Windows PC for signs that someone may be
-monitoring it — screen recording, camera/microphone spying, keyloggers, and
-remote-access tools.
+Two tools for a Windows PC:
 
-It **only looks**. It does **not** delete, quarantine, modify, or "clean" anything,
-and it makes **no network connections** — so running it will not tip off a watcher
-or destroy evidence. It writes a report to the Desktop and opens it for you.
+1. **The scanner** — a **read-only** check for signs that someone may be monitoring the
+   machine (screen recording, camera/mic spying, keyloggers, remote-access tools, and
+   more). It only looks; it changes nothing and makes no network connections.
+2. **The fix tool** — a **separate, guided** tool that can turn off risky settings and
+   remove flagged software. It asks before every change and everything it does is
+   reversible.
+
+Keeping them separate is deliberate: the scanner stays provably "look but don't touch"
+(safe to hand to anyone), while the tool that actually changes the system is opt-in and
+only run by someone who knows what they're doing.
 
 ---
 
+## What's in this pack
+
+| File | What it is |
+|------|------------|
+| `Scan-Surveillance.ps1` | The scanner (read-only). |
+| `RUN_ME_Scan.bat` | Double-click launcher for the scanner. |
+| `Fix-Surveillance.ps1` | The guided remediation tool (makes reversible changes). |
+| `RUN_ME_Fix.bat` | Double-click launcher for the fix tool. |
+| `UNDO_Fix.bat` | Reverses every change the fix tool made. |
+| `INSTRUCTIONS.txt` | Plain-language, step-by-step guide for running **the scan** (written for a non-technical person). |
+| `README.md` | This file. |
+
+**Recommended order:** run the scan first, read the report, then — only if needed and
+only on a machine you're comfortable changing — run the fix tool.
+
+---
+
+# PART 1 — THE SCAN (read-only)
+
 ## How to run it
 
-You need two files in the same folder:
-
-- `Scan-Surveillance.ps1` (the scanner)
-- `RUN_ME_Scan.bat` (the launcher)
+You need `Scan-Surveillance.ps1` and `RUN_ME_Scan.bat` in the same folder.
 
 ### Option A — USB flash drive (easiest)
 1. Copy **both** files to a USB stick.
-2. Plug the stick into the uncle's PC.
+2. Plug the stick into the PC.
 3. Double-click **`RUN_ME_Scan.bat`**.
 4. Click **Yes** on the Windows "Do you want to allow…" (UAC) prompt — this lets the
    scan see all accounts, services, and tasks, not just the logged-in user.
@@ -38,7 +59,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Scan-Surveillance.ps1
 The `-ExecutionPolicy Bypass` part is needed because Windows blocks unsigned scripts
 by default. Running it this way only affects that one run.
 
----
+(For a fuller walkthrough aimed at a non-technical person — including the SmartScreen
+warning and antivirus false-positives — see `INSTRUCTIONS.txt`.)
 
 ## What the report shows
 
@@ -69,59 +91,95 @@ and unexpected local user accounts.
 
 ---
 
-## Honest limitations — please read
+# PART 2 — THE FIX TOOL (makes changes)
 
-No script can catch **every** possible form of spying with certainty. Be realistic
-about what this does and doesn't do. It is a strong **first pass**, not a guarantee.
+Run this **only after** you've read the scan report and understand what you're changing.
+It needs `Fix-Surveillance.ps1`, `RUN_ME_Fix.bat`, and `UNDO_Fix.bat` together.
 
-It can **miss**:
-- A **skilled, custom-built implant** or **rootkit** designed to hide itself from
-  exactly these kinds of checks.
-- **Kernel-level or firmware/BIOS** implants.
-- **Hardware** devices: a physical keylogger plugged in-line with the keyboard, or a
-  hidden camera/microphone in the room. Those are found by physically inspecting the
-  machine and the space, not by software.
-- **Phone / account-based tracking** (e.g. location sharing, cloud-account access) —
-  this scans the PC only.
-- **Router- or network-level** interception upstream of the PC.
+## How to run it
+1. Double-click **`RUN_ME_Fix.bat`** and approve the admin prompt.
+2. It walks you through four stages, asking **y/n before every single change**:
+   - **Hardening** — offer to disable Remote Assistance, Remote Desktop (RDP), and
+     Xbox Game Bar background recording. Reversible.
+   - **Startup items** — list what launches automatically (flagging anything that
+     matches known spy/monitor/remote-tool names) and let you disable them one at a
+     time. Reversible.
+   - **Detected programs** — for anything matching the surveillance name lists, offer
+     **[U]ninstall** (runs the program's own uninstaller), **[Q]uarantine** (stop it,
+     disable its service, strip its persistence, and *move* its files aside — reversible),
+     or **[S]kip**.
+   - **Permanent delete** — optional and separate. You must type `DELETE` after seeing
+     exactly what's in quarantine. This is the only step that can't be undone.
+3. A log and a `Quarantine` folder are saved on the Desktop under `Surveillance_Fix`.
 
-If anything below is true, go further than this script:
-- The HIGH section is non-empty and you don't understand why.
-- The uncle has real reason to think a specific person is involved.
-- The stakes are high.
+## Undo
+Made a change you regret? Double-click **`UNDO_Fix.bat`**. It reads the undo journal and
+reverses everything from the last run — restores the settings, re-enables services,
+and moves quarantined files back to where they were. (The one thing it can't reverse is
+a program you chose to fully **uninstall**, or a quarantine you chose to **permanently
+delete**.)
 
-Good next steps / second opinions:
-- **Sysinternals Autoruns** and **Process Explorer** (free, from Microsoft) — deeper
-  look at everything that auto-starts and every running process.
-- **Malwarebytes** — a second-opinion malware scan.
-- **Microsoft Defender Offline scan** (Windows Security → Virus & threat protection →
-  Scan options) — catches things that hide while Windows is running.
-- A local **cybersecurity / digital-forensics professional** if the situation is
-  serious.
+## How removal is kept safe
+- Config changes and "disable" actions are **reversible**.
+- Removing a program **prefers the program's own uninstaller** (cleanest), and otherwise
+  **quarantines by moving files**, not deleting them.
+- A **path guardrail** refuses to touch the Windows folder or bare drive/Program-Files
+  roots, so a mistaken match can't damage the OS.
+- **Nothing is permanently deleted** unless you explicitly type `DELETE` at the end.
+
+> **For confirmed real malware, also run Microsoft Defender Offline and/or Malwarebytes.**
+> This tool disables and quarantines; a real AV engine removes infections more completely
+> (locked files, boot-time removal, things that respawn). Treat this as hardening plus
+> cleanup of the obvious stuff — not as a replacement for antivirus on an active infection.
 
 ---
 
+## Honest limitations — please read
+
+No script can catch **every** possible form of spying with certainty. It is a strong
+**first pass**, not a guarantee.
+
+The scanner can **miss**:
+- A **skilled, custom-built implant** or **rootkit** designed to hide from exactly these
+  kinds of checks.
+- **Kernel-level or firmware/BIOS** implants.
+- **Hardware** devices: a physical keylogger in-line with the keyboard, or a hidden
+  camera/microphone in the room. Those need a physical inspection, not software.
+- **Phone / account-based tracking** (location sharing, cloud-account access) — this
+  scans the PC only.
+- **Router- or network-level** interception upstream of the PC.
+
+Go further than these tools if: the HIGH section isn't empty and you don't understand
+why; there's real reason to think a specific person is involved; or the stakes are high.
+
+Good next steps / second opinions:
+- **Sysinternals Autoruns** and **Process Explorer** (free, Microsoft) — deeper look at
+  everything that auto-starts and every running process.
+- **Malwarebytes** — a second-opinion malware scan.
+- **Microsoft Defender Offline scan** (Windows Security → Virus & threat protection →
+  Scan options) — catches things that hide while Windows is running.
+- A local **cybersecurity / digital-forensics professional** if the situation is serious.
+
 ## If the scan finds something serious
 
-**Don't immediately delete it.** That feels satisfying but can backfire:
+**Don't rush to delete.** If a specific person may be responsible, wiping things can
+(a) destroy evidence and (b) tip them off — which matters most if that person has
+physical access or a close relationship to the PC's owner. Prefer to:
+1. **Preserve the evidence** — keep the saved HTML/TXT report; take screenshots.
+2. **Get a second opinion** with the tools above.
+3. **Consider professional help** rather than acting alone in the moment.
 
-1. **Preserve the evidence.** Keep the saved HTML/TXT report. If a specific person may
-   be responsible, deleting the tool can (a) destroy proof and (b) tip them off that
-   they've been discovered — which matters most if that person has physical access to
-   the machine or a close relationship to your uncle.
-2. **Get a second opinion** using the tools above before acting.
-3. **Consider professional help** for removal and for advice on what to do next,
-   rather than acting alone in the moment.
-
-Take screenshots, note dates/times, and decide on a calm plan.
+The fix tool's quarantine (move, don't delete) is designed to support this — you can
+neutralise something while keeping it recoverable.
 
 ---
 
 ## Technical notes
-
-- **Read-only & offline** by design. No files are changed; no data leaves the machine.
-- Targets **Windows PowerShell 5.1** (built into Windows 10/11) — no extra install.
-- Every check is isolated, so if one part errors, the rest of the scan still completes.
-- Reports are saved to the Desktop as
-  `Surveillance_Scan_<PCNAME>_<timestamp>.html` and `.txt` (falls back to your temp
-  folder if the Desktop isn't writable).
+- **Scanner:** read-only and offline. No files changed; nothing leaves the machine.
+- **Fix tool:** every change asks first, is logged, and is reversible (except explicit
+  uninstall / permanent delete).
+- Both target **Windows PowerShell 5.1** (built into Windows 10/11) — no extra install.
+- Each check is isolated, so if one part errors the rest still completes.
+- Scanner reports save to the Desktop as `Surveillance_Scan_<PCNAME>_<timestamp>.html`
+  and `.txt`; fix-tool logs and quarantine live in `Surveillance_Fix` on the Desktop
+  (both fall back to your temp folder if the Desktop isn't writable).
