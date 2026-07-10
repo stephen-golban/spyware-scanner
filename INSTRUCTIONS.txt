@@ -168,20 +168,12 @@
        RIGHT-click the .bat file and choose  "Run as administrator".
 
    * The black window flashes and disappears instantly:
-       1. Click Start, type:  powershell
-       2. RIGHT-click "Windows PowerShell" -> "Run as administrator" -> Yes.
-       3. Type this on one line and press Enter (change the path to where your
-          extracted folder actually is):
-
-            powershell -NoProfile -ExecutionPolicy Bypass -File "C:\path\to\folder\Scan-Surveillance.ps1"
-
-          (For the fix tool, use Fix-Surveillance.ps1 instead. Add  -Undo  at
-           the end to undo.)
+       RIGHT-click RUN_ME_Scan.bat and choose "Run as administrator".
 
    * Antivirus blocks it or puts it in "quarantine":
        This happens because these are unsigned scripts that inspect the system.
-       They are safe and (for the scan) read-only. Either temporarily allow /
-       restore the file in your antivirus, or use the PowerShell method above.
+       They are safe and (for the scan) read-only. Temporarily allow / restore
+       the file in your antivirus, then run RUN_ME_Scan.bat again.
 
    * "Could not get administrator rights":
        Right-click the .bat and choose "Run as administrator".
