@@ -1,6 +1,6 @@
 @echo off
 REM ============================================================================
-REM  RUN_ME_Scan.bat  -  double-click launcher for Scan-Surveillance.ps1
+REM  1_SCAN.bat  -  double-click launcher for scan-engine.ps1
 REM
 REM  What it does:
 REM    1. Asks Windows for Administrator rights (a UAC prompt will pop up).
@@ -39,7 +39,7 @@ echo.
 echo   Starting the scan. This can take a minute or two...
 echo.
 
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0Scan-Surveillance.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0scan-engine.ps1"
 
 REM Fallback pause in case the PowerShell script exits before its own prompt
 if %errorlevel% NEQ 0 (

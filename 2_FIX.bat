@@ -1,7 +1,7 @@
 @echo off
 REM ============================================================================
-REM  RUN_ME_Fix.bat  -  launches the guided remediation tool (asks before every
-REM  change; everything is reversible with UNDO_Fix.bat).
+REM  2_FIX.bat  -  launches the guided remediation tool (asks before every
+REM  change; everything is reversible with 3_UNDO.bat).
 REM  Administrator rights are required to make changes.
 REM ============================================================================
 setlocal
@@ -22,7 +22,7 @@ if %errorlevel% NEQ 0 (
     exit /b
 )
 
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0Fix-Surveillance.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0fix-engine.ps1"
 if %errorlevel% NEQ 0 (
     echo.
     echo   The tool exited with an error code ^(%errorlevel%^).

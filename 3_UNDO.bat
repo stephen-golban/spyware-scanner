@@ -1,6 +1,6 @@
 @echo off
 REM ============================================================================
-REM  UNDO_Fix.bat  -  reverses every change made by RUN_ME_Fix.bat, using the
+REM  3_UNDO.bat  -  reverses every change made by 2_FIX.bat, using the
 REM  undo journal (restores settings, re-enables services/tasks, and moves any
 REM  quarantined files back). Requires Administrator rights.
 REM ============================================================================
@@ -22,7 +22,7 @@ if %errorlevel% NEQ 0 (
     exit /b
 )
 
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0Fix-Surveillance.ps1" -Undo
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0fix-engine.ps1" -Undo
 if %errorlevel% NEQ 0 (
     echo.
     echo   The tool exited with an error code ^(%errorlevel%^).

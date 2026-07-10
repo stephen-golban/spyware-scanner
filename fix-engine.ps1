@@ -1,7 +1,7 @@
 <#
 ===============================================================================
-  Fix-Surveillance.ps1
-  Guided, REVERSIBLE remediation companion to Scan-Surveillance.ps1
+  fix-engine.ps1
+  Guided, REVERSIBLE remediation companion to scan-engine.ps1
 ===============================================================================
 
   This tool ACTS on the machine (unlike the scanner, which only looks). It is
@@ -16,8 +16,8 @@
     * Every change is written to a log, and an undo journal lets you roll back.
 
   USAGE
-    Normal (guided fixes):   run RUN_ME_Fix.bat   (or this script as admin)
-    Undo everything:         run UNDO_Fix.bat     (or:  Fix-Surveillance.ps1 -Undo)
+    Normal (guided fixes):   run 2_FIX.bat    (or this script as admin)
+    Undo everything:         run 3_UNDO.bat   (or:  fix-engine.ps1 -Undo)
 
   It must run as Administrator. Windows-only (PowerShell 5.1+).
   IMPORTANT: For confirmed real malware, Microsoft Defender Offline and
@@ -80,7 +80,7 @@ $admin = ([Security.Principal.WindowsPrincipal]$id).IsInRole([Security.Principal
 if (-not $admin) {
     Write-Host ''
     Write-Host '  This tool needs Administrator rights to make changes.' -ForegroundColor Red
-    Write-Host '  Please close this and run RUN_ME_Fix.bat, then click YES.' -ForegroundColor Red
+    Write-Host '  Please close this and run 2_FIX.bat, then click YES.' -ForegroundColor Red
     Read-Host '  Press Enter to exit'
     exit 1
 }
@@ -172,7 +172,7 @@ if ($Undo) {
 Clear-Host
 Write-Host ''
 Write-Host '  SURVEILLANCE FIX - guided, reversible remediation' -ForegroundColor White
-Write-Host '  Every change asks first. Undo anytime with UNDO_Fix.bat.' -ForegroundColor DarkGray
+Write-Host '  Every change asks first. Undo anytime with 3_UNDO.bat.' -ForegroundColor DarkGray
 Write-Host ("  Log + quarantine folder: {0}" -f $WorkDir) -ForegroundColor DarkGray
 
 # suspicious name patterns (compact subset - spyware / screen monitors / remote tools)
@@ -447,7 +447,7 @@ if (Test-Path -LiteralPath $QuarantineDir) {
         if ($c -ceq 'DELETE') {
             try { Remove-Item -LiteralPath $QuarantineDir -Recurse -Force; Write-Log 'Quarantine permanently deleted.' 'Green' }
             catch { Write-Log ("Delete error: {0}" -f $_) 'Yellow' }
-        } else { Write-Host '  Kept quarantine. You can delete it later or restore with UNDO_Fix.bat.' -ForegroundColor Green }
+        } else { Write-Host '  Kept quarantine. You can delete it later or restore with 3_UNDO.bat.' -ForegroundColor Green }
     } else { Write-Host '  Quarantine is empty - nothing to delete.' -ForegroundColor Green }
 } else { Write-Host '  Nothing was quarantined.' -ForegroundColor Green }
 
@@ -456,7 +456,7 @@ Write-Host ''
 Write-Host ('=' * 74) -ForegroundColor DarkCyan
 Write-Host '  Done.' -ForegroundColor White
 Write-Host ("  Log saved to: {0}" -f $LogPath) -ForegroundColor Gray
-Write-Host '  To reverse the changes made in this run, run UNDO_Fix.bat.' -ForegroundColor Gray
+Write-Host '  To reverse the changes made in this run, run 3_UNDO.bat.' -ForegroundColor Gray
 Write-Host '  For confirmed malware, also run a Microsoft Defender Offline scan' -ForegroundColor Gray
 Write-Host '  and/or Malwarebytes - they remove infections more thoroughly.' -ForegroundColor Gray
 Write-Host '  A reboot is a good idea after making changes.' -ForegroundColor Gray

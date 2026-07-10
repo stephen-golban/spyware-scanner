@@ -22,9 +22,8 @@
             Nothing here alerts a watcher or changes evidence.
 
   RUN     : Best run as Administrator for full coverage. Easiest way:
-            double-click  RUN_ME_Scan.bat  (it will ask for admin and launch
-            this file). Or from an elevated PowerShell:
-              powershell -NoProfile -ExecutionPolicy Bypass -File .\Scan-Surveillance.ps1
+            double-click  1_SCAN.bat  (it will ask for admin and launch
+            this file).
 
   NOTE    : "MEDIUM" findings are things a human should REVIEW - many are
             perfectly legitimate (Zoom uses your camera; company IT may use a
@@ -229,7 +228,7 @@ function Get-SystemInfo {
     Write-Host ("  Booted   : {0}" -f $os.LastBootUpTime)
     Write-Host ("  Elevated : {0}" -f $(if($isAdmin){'YES (full coverage)'}else{'NO'}))
     if (-not $isAdmin) {
-        Add-Finding INFO 'System' 'Not running as Administrator - some checks are limited' 'For a complete scan, re-run using RUN_ME_Scan.bat and approve the admin prompt.'
+        Add-Finding INFO 'System' 'Not running as Administrator - some checks are limited' 'For a complete scan, re-run using 1_SCAN.bat and approve the admin prompt.'
     }
 
     Write-Host '  Collecting process / service / software inventory...' -ForegroundColor DarkGray

@@ -14,11 +14,16 @@
  Do the SCAN first (Parts 1-3). Only do the FIX (Part 4) if you need to and you
  understand what you are changing.
 
- Files you will see after downloading:
-     Scan-Surveillance.ps1     RUN_ME_Scan.bat        <- the scan
-     Fix-Surveillance.ps1      RUN_ME_Fix.bat         <- the fix
-                               UNDO_Fix.bat           <- undo the fix
-     README.md                 INSTRUCTIONS.txt       <- docs
+ Files you will see after downloading (double-click the numbered .bat files;
+ the "engine" .ps1 files run automatically - you never click them directly):
+
+     1_SCAN.bat            <- the scan        (double-click this first)
+     2_FIX.bat             <- the fix         (optional, after the scan)
+     3_UNDO.bat            <- undo the fix
+
+     scan-engine.ps1       <- used by 1_SCAN.bat   (don't click directly)
+     fix-engine.ps1        <- used by 2_FIX/3_UNDO (don't click directly)
+     README.md             INSTRUCTIONS.txt   <- docs
 
 
 ==============================================================================
@@ -44,13 +49,13 @@
 
    7. A folder opens. You may need to open ONE more folder inside it (GitHub
       names it something like "...-main"). Keep opening until you can see
-      RUN_ME_Scan.bat and the other files listed above sitting together.
+      1_SCAN.bat and the other files listed above sitting together.
 
       >> Keep all the files together in this one folder. The launchers look for
          the scripts next to them.
 
    (Optional, only if a script later refuses to run: right-click
-    RUN_ME_Scan.bat -> Properties -> if you see an "Unblock" checkbox near the
+    1_SCAN.bat -> Properties -> if you see an "Unblock" checkbox near the
     bottom, tick it and click OK. Do the same for the .ps1 files. Windows marks
     downloaded files as "blocked" and this clears it.)
 
@@ -59,7 +64,7 @@
  PART 2 - RUN THE SCAN
 ==============================================================================
 
-   1. DOUBLE-CLICK the file named:   RUN_ME_Scan.bat
+   1. DOUBLE-CLICK the file named:   1_SCAN.bat
 
    2. You will probably see a blue box: "Windows protected your PC".
       This is normal for a downloaded script. To continue:
@@ -109,7 +114,7 @@
    The fix tool asks Y/N before EVERY change, and everything can be undone
    (Part 5). Run it only after reading the scan report.
 
-   1. DOUBLE-CLICK:   RUN_ME_Fix.bat
+   1. DOUBLE-CLICK:   2_FIX.bat
 
    2. Same as before: if "Windows protected your PC" appears, click
       "More info" -> "Run anyway".  Then click "Yes" on the admin prompt.
@@ -151,7 +156,7 @@
  PART 5 - UNDO THE FIX  (if you changed something by mistake)
 ==============================================================================
 
-   1. DOUBLE-CLICK:   UNDO_Fix.bat
+   1. DOUBLE-CLICK:   3_UNDO.bat
    2. Click "Yes" on the admin prompt.
    3. It reverses everything from the last fix run - puts settings back,
       re-enables services, and moves quarantined files back where they were.
@@ -168,12 +173,12 @@
        RIGHT-click the .bat file and choose  "Run as administrator".
 
    * The black window flashes and disappears instantly:
-       RIGHT-click RUN_ME_Scan.bat and choose "Run as administrator".
+       RIGHT-click 1_SCAN.bat and choose "Run as administrator".
 
    * Antivirus blocks it or puts it in "quarantine":
        This happens because these are unsigned scripts that inspect the system.
        They are safe and (for the scan) read-only. Temporarily allow / restore
-       the file in your antivirus, then run RUN_ME_Scan.bat again.
+       the file in your antivirus, then run 1_SCAN.bat again.
 
    * "Could not get administrator rights":
        Right-click the .bat and choose "Run as administrator".

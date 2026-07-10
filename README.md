@@ -19,11 +19,11 @@ only run by someone who knows what they're doing.
 
 | File | What it is |
 |------|------------|
-| `Scan-Surveillance.ps1` | The scanner (read-only). |
-| `RUN_ME_Scan.bat` | Double-click launcher for the scanner. |
-| `Fix-Surveillance.ps1` | The guided remediation tool (makes reversible changes). |
-| `RUN_ME_Fix.bat` | Double-click launcher for the fix tool. |
-| `UNDO_Fix.bat` | Reverses every change the fix tool made. |
+| `1_SCAN.bat` | Double-click launcher for the scanner. |
+| `2_FIX.bat` | Double-click launcher for the fix tool. |
+| `3_UNDO.bat` | Reverses every change the fix tool made. |
+| `scan-engine.ps1` | The scanner itself (read-only). Run by `1_SCAN.bat` — don't double-click it directly. |
+| `fix-engine.ps1` | The guided remediation tool itself (makes reversible changes). Run by `2_FIX.bat` / `3_UNDO.bat`. |
 | `INSTRUCTIONS.txt` | Plain-language, step-by-step guide for running **the scan** (written for a non-technical person). |
 | `README.md` | This file. |
 
@@ -36,11 +36,11 @@ only on a machine you're comfortable changing — run the fix tool.
 
 ## How to run it
 
-Keep `Scan-Surveillance.ps1` and `RUN_ME_Scan.bat` in the same folder (they already are,
-in the repo).
+Keep all the files in the same folder (they already are, in the repo) — the launchers
+look for the engine scripts next to them.
 
 1. Download the repository and extract it so you see the files together.
-2. Double-click **`RUN_ME_Scan.bat`** → on "Windows protected your PC" click
+2. Double-click **`1_SCAN.bat`** → on "Windows protected your PC" click
    **More info → Run anyway** → click **Yes** on the admin prompt.
 3. Wait 1–2 minutes. A report opens automatically and is saved to the Desktop.
 
@@ -82,10 +82,10 @@ and unexpected local user accounts.
 # PART 2 — THE FIX TOOL (makes changes)
 
 Run this **only after** you've read the scan report and understand what you're changing.
-It needs `Fix-Surveillance.ps1`, `RUN_ME_Fix.bat`, and `UNDO_Fix.bat` together.
+It needs `fix-engine.ps1`, `2_FIX.bat`, and `3_UNDO.bat` together.
 
 ## How to run it
-1. Double-click **`RUN_ME_Fix.bat`** and approve the admin prompt.
+1. Double-click **`2_FIX.bat`** and approve the admin prompt.
 2. It walks you through four stages, asking **y/n before every single change**:
    - **Hardening** — offer to disable Remote Assistance, Remote Desktop (RDP), and
      Xbox Game Bar background recording. Reversible.
@@ -101,7 +101,7 @@ It needs `Fix-Surveillance.ps1`, `RUN_ME_Fix.bat`, and `UNDO_Fix.bat` together.
 3. A log and a `Quarantine` folder are saved on the Desktop under `Surveillance_Fix`.
 
 ## Undo
-Made a change you regret? Double-click **`UNDO_Fix.bat`**. It reads the undo journal and
+Made a change you regret? Double-click **`3_UNDO.bat`**. It reads the undo journal and
 reverses everything from the last run — restores the settings, re-enables services,
 and moves quarantined files back to where they were. (The one thing it can't reverse is
 a program you chose to fully **uninstall**, or a quarantine you chose to **permanently
